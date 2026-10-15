@@ -2,12 +2,14 @@
 # Stubs exit 1 with the phase that implements them, so nothing silently "succeeds".
 
 SHELL := /bin/sh
+# The rack-delivery-pipeline dbt project, which holds the semantic models and contracts.
+P1_DBT_DIR ?= ../p1-rack-delivery-pipeline/dbt
 
 define not_implemented
 	@echo "make $@: not implemented (BUILD_PLAN $(1))" >&2; exit 1
 endef
 
-.PHONY: setup lint typecheck test mf-validate dictionary deploy ask eval teardown
+.PHONY: setup lint typecheck test mf-validate sync-artifacts dictionary deploy ask eval teardown
 
 setup:
 	uv sync
@@ -19,15 +21,21 @@ lint:
 typecheck:
 	uv run mypy src
 
-# pytest exit code 5 means "no tests collected", which is fine until tests land.
+# tests/test_metric_examples.py needs the rack-delivery-pipeline warehouse; it skips without one.
 test:
-	uv run pytest -q || [ $$? -eq 5 ]
+	uv run pytest -q
 
+# PYTHONUTF8 keeps mf's progress spinner from failing on Windows consoles.
 mf-validate:
-	$(call not_implemented,Phase 1)
+	cd $(P1_DBT_DIR) && PYTHONUTF8=1 uv run mf validate-configs
+
+# Pin the compiled semantic layer this repo is built against (input artifact, committed).
+sync-artifacts:
+	cd $(P1_DBT_DIR) && uv run dbt parse --target local --quiet
+	mkdir -p artifacts && cp $(P1_DBT_DIR)/target/semantic_manifest.json artifacts/
 
 dictionary:
-	$(call not_implemented,Phase 2)
+	uv run python -m nlq.dictionary
 
 ask:
 	$(call not_implemented,Phase 3 locally / Phase 4 deployed)

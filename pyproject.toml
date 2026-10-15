@@ -3,7 +3,10 @@ name = "nlq"
 version = "0.1.0"
 description = "Governed metric layer and Bedrock text-to-SQL with a SQL guard and execution-accuracy eval."
 requires-python = ">=3.12,<3.13"
-dependencies = []
+dependencies = [
+    "duckdb>=1.1",
+    "sqlglot>=25",
+]
 
 [dependency-groups]
 dev = [
