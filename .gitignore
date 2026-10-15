@@ -24,3 +24,12 @@ crash.log
 Thumbs.db
 .idea/
 .vscode/
+
+# Local planning notes and assistant context (not part of the project)
+CLAUDE.md
+docs/BUILD_PLAN.md
+docs/SPEC.md
+docs/NLQ_SPEC.md
+docs/EVAL_SPEC.md
+docs/DEPLOY_WINDOW.md
+docs/INTERVIEW_PREP.md

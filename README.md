@@ -77,7 +77,7 @@ flowchart LR
 
 ## How accuracy is measured
 
-A fixed golden set of **60 questions** was written against the governed definitions before any prompt existed. It has 52 hand-written ground-truth queries and 9 accepted alternatives for genuinely ambiguous questions.
+A fixed golden set of **60 questions** was written against the governed definitions before any prompt existed. It has 52 ground-truth queries, fixed before any prompt was written, and 9 accepted alternatives for genuinely ambiguous questions.
 
 | Category | Questions | Tests |
 |---|---|---|
@@ -96,8 +96,6 @@ A fixed golden set of **60 questions** was written against the governed definiti
 - **Failure taxonomy.** Every miss gets one label, assigned in a fixed order: SQL error, should have refused, refused wrongly, hallucinated column, wrong metric, wrong date window, wrong filter, wrong aggregation.
 - **Also reported:** refusal precision and recall, guard rejections, latency at p50 and p95 per step, and Bedrock tokens and cost per question.
 
-Full spec: [docs/EVAL_SPEC.md](docs/EVAL_SPEC.md).
-
 ## Repository layout
 
 ```
@@ -106,7 +104,7 @@ prompts/          versioned system prompts; every eval run records the prompt ha
 eval/golden/      60 questions, ground-truth and alternative SQL (fixed)
 eval/             harness, result-set comparison, reports and SUMMARY
 artifacts/        compiled semantic manifest pinned from rack-delivery-pipeline
-docs/             spec, approved metrics, NLQ and eval specs, governance, contract demo, generated dictionary and canonical queries
+docs/             approved metrics, governance, contract demo, generated dictionary and canonical queries
 infra/            Terraform: Lambda, HTTP API, scoped IAM
 ```
 

@@ -1,6 +1,6 @@
 # METRICS (source of truth for what to define in MetricFlow)
 
-Status: approved. Claude Code translates this table into semantic YAML exactly. The golden question set in `eval/golden/` is written against these definitions, so do not change a definition without updating the affected ground-truth queries and logging it in `eval/golden/CHANGELOG.md`.
+Status: approved. The semantic YAML implements this table exactly. The golden question set in `eval/golden/` is written against these definitions, so do not change a definition without updating the affected ground-truth queries and logging it in `eval/golden/CHANGELOG.md`.
 
 All metrics use time dimension and grain as stated. "Completed" means `production_at is not null`.
 
@@ -28,7 +28,7 @@ Notes for implementation
 
 ## Canonical example queries
 
-For each metric, Claude Code writes one reference SQL query (`docs/generated/examples/<metric>.sql`) against the marts that reproduces `mf query --metrics <metric> --group-by metric_time__month` output. A test asserts both return identical results. These examples become part of the grounded prompt.
+Each metric has one reference SQL query (`docs/generated/examples/<metric>.sql`) against the marts that reproduces `mf query --metrics <metric> --group-by metric_time__month` output. A test asserts both return identical results. These examples become part of the grounded prompt.
 
 ## Implementation notes for the fact table flags
 
